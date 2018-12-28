@@ -51,8 +51,8 @@ class GameMode {
             const quadrant = Math.floor(index * scale);
             const direction = Vector(Math.cos(quadrant * dAngle), Math.sin(quadrant * dAngle));
 
-            hero.SetAbsOrigin(GetGroundPosition(direction * 600, hero));
-            hero.SetForwardVector(-direction);
+            hero.SetAbsOrigin(GetGroundPosition(direction * 600 as Vector, hero));
+            hero.SetForwardVector(-direction as Vector);
         });
     }
 }
