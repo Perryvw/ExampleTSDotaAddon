@@ -16,7 +16,7 @@ registerModifier = function(name, modifier)
         end
         ::__continue2::
     end
-    _G[name] = instance;
+    getfenv(1)[name] = instance;
 end;
 registerAbility = function(name, ability)
     local instance = {};
@@ -35,5 +35,5 @@ registerAbility = function(name, ability)
         end
         ::__continue6::
     end
-    _G[name] = instance;
+    getfenv(1)[name] = instance;
 end;

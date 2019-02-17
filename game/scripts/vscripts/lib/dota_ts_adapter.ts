@@ -1,4 +1,4 @@
-declare const _G: {[key: string]: any};
+declare function getfenv(obj: any): {[key: string]: any};
 declare function getmetatable(obj: object): object;
 
 function registerModifier(name: string, modifier: new () => CDOTA_Modifier_Lua) {
@@ -12,7 +12,7 @@ function registerModifier(name: string, modifier: new () => CDOTA_Modifier_Lua) 
         }
         prototype = getmetatable(prototype);
     }
-    _G[name] = instance;
+    getfenv(1)[name] = instance;
 }
 
 function registerAbility(name: string, ability: new () => CDOTA_Ability_Lua) {
@@ -26,5 +26,5 @@ function registerAbility(name: string, ability: new () => CDOTA_Ability_Lua) {
         }
         prototype = getmetatable(prototype);
     }
-    _G[name] = instance;
+    getfenv(1)[name] = instance;
 }
