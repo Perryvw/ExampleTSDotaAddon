@@ -1,0 +1,1 @@
+require("lib.dota_ts_adapter")

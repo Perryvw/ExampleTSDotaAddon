@@ -6,5 +6,6 @@
         "strictNullChecks" : true,
         "target": "es6",
     },
-    "luaTarget": "JIT"
+    "luaTarget": "JIT",
+    "lualibImportKind": "require"
 }

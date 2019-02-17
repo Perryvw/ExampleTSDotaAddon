@@ -8,8 +8,9 @@
             "type": "shell",
             "command": "tstl -p tsconfig.json",
             "group": {
-                "kind": "build",
-            }
+                "kind": "build"
+            },
+            "problemMatcher": []
         },
         {
             "label": "Compile TypeScript to Lua - Watch",
@@ -17,7 +18,8 @@
             "command": "tstl -p tsconfig.json --watch",
             "group": {
                 "kind": "build"
-            }
+            },
+            "problemMatcher": []
         }
     ]
 }

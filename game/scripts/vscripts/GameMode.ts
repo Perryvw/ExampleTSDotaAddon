@@ -1,3 +1,5 @@
+LinkLuaModifier("modifier_panic", "modifiers/modifier_panic.lua", LuaModifierType.LUA_MODIFIER_MOTION_NONE);
+
 const HeroSelectionTime = 10;
 
 class GameMode {
@@ -9,6 +11,8 @@ class GameMode {
         GameRules.SetHeroSelectionTime(HeroSelectionTime);
 
         ListenToGameEvent("game_rules_state_change", () => this.OnStateChange(), null);
+
+        ListenToGameEvent("npc_spawned", event => this.OnNpcSpawned(event), null);
     }
 
     public OnStateChange(): void {
@@ -28,31 +32,28 @@ class GameMode {
     }
 
     private StartGame(): void {
-        // Set hero positions
-        this.PositionHeroes();
+        print("Game starting!")
 
-        // Disallow players from doing any orders directly (only allowed through UI)
-        GameRules.GetGameModeEntity().SetExecuteOrderFilter((ctx, order) => order.issuer_player_id_const == -1, this);
+        // Do some stuff here
     }
 
     // Called on script_reload
     public Reload() {
-        print("Reload");
+        print("Script reloaded!");
+
+        // Do some stuff here
     }
 
-    // Position heroes in a circle
-    private PositionHeroes(): void {
-        const heroes = HeroList.GetAllHeroes();
+    private OnNpcSpawned(event: NpcSpawnedEvent) {
+        // After a unit spawns, apply modifier_panic for 8 seconds
+        const unit = EntIndexToHScript(event.entindex) as CDOTA_BaseNPC; // Cast to npc since this is the 'npc_spawned' event
+        if (unit.IsRealHero()) {
+            Timers.CreateTimer(1, () => {
+                unit.AddNewModifier(undefined, undefined, "modifier_panic", { duration: 8 });
+            });
 
-        const dAngle = 2 * Math.PI / 15;
-        const scale = 15 / heroes.length;
-
-        heroes.forEach((hero, index) => {
-            const quadrant = Math.floor(index * scale);
-            const direction = Vector(Math.cos(quadrant * dAngle), Math.sin(quadrant * dAngle));
-
-            hero.SetAbsOrigin(GetGroundPosition(direction * 600 as Vector, hero));
-            hero.SetForwardVector(-direction as Vector);
-        });
+            // Add lua ability to the unit
+            unit.AddAbility("meepo_earthbind_ts_example");
+        }
     }
 }
