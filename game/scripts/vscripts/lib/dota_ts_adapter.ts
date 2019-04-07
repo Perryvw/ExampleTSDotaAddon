@@ -1,3 +1,19 @@
+declare const _G: any;
+
+if (_G.reloadCache === undefined) {
+    _G.reloadCache = {}
+}
+
+function reloadable<T extends {new(...args: any[]): {}}>(className: string, constructor: T): T {
+
+    if (_G.reloadCache[className] === undefined) {
+        _G.reloadCache[className] = constructor;
+    }
+
+    Object.assign(_G.reloadCache[className].prototype, constructor.prototype);
+    return _G.reloadCache[className];
+}
+
 declare function getfenv(obj: any): {[key: string]: any};
 declare function getmetatable(obj: object): object;
 
