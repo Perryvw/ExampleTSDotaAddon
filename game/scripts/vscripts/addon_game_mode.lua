@@ -5,7 +5,8 @@ require("lib.timers")
 
 require("GameMode")
 
-function Precache()
+function Precache(context)
+    GameMode.Precache(context)
 end
 
 function Activate()

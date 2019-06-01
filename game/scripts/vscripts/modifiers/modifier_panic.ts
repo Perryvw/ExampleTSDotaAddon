@@ -30,12 +30,6 @@ registerModifier("modifier_panic", class extends Modifier_Speed {
     OnIntervalThink(): void {
         const parent = this.GetParent();
 
-        // Check if parent is not too far from origin
-        if (parent.GetAbsOrigin().Length2D() < 500) {
-            parent.MoveToPosition(parent.GetAbsOrigin() + RandomVector(400) as Vector);
-        } else {
-            // Otherwise redirect in the direction of the origin
-            parent.MoveToPosition(RandomVector(300));
-        }
+        parent.MoveToPosition(parent.GetAbsOrigin() + RandomVector(400) as Vector);
     }
 });

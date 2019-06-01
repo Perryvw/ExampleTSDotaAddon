@@ -1,10 +1,44 @@
 --[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
-require("lualib_bundle");
-__TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["4"] = 3,["5"] = 1,["6"] = 1,["7"] = 7,["8"] = 9,["9"] = 7,["10"] = 7,["11"] = 7,["12"] = 7,["13"] = 1,["14"] = 20,["15"] = 20,["16"] = 20,["17"] = 23,["18"] = 24,["19"] = 25,["20"] = 24,["21"] = 24,["22"] = 23,["23"] = 23,["24"] = 20,["25"] = 20,["26"] = 1,["27"] = 34,["28"] = 34,["29"] = 34,["30"] = 37,["31"] = 38,["32"] = 39,["33"] = 38,["34"] = 38,["35"] = 37,["36"] = 37,["37"] = 34,["38"] = 34,["39"] = 1});
+-- Lua Library inline imports
+--[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
+function __TS__ObjectAssign(to, ...)
+    local sources = ({...})
+    if to == nil then
+        return to
+    end
+    for ____, source in ipairs(sources) do
+        for key in pairs(source) do
+            to[key] = source[key]
+        end
+    end
+    return to
+end
+
+--[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
+function __TS__SourceMapTraceBack(fileName, sourceMap)
+    _G.__TS__sourcemap = _G.__TS__sourcemap or {}
+    _G.__TS__sourcemap[fileName] = sourceMap
+    if _G.__TS__originalTraceback == nil then
+        _G.__TS__originalTraceback = debug.traceback
+        debug.traceback = function(thread, message, level)
+            local trace = _G.__TS__originalTraceback(thread, message, level)
+            local result = string.gsub(trace, "(%S+).lua:(%d+)", function(file, line)
+                if _G.__TS__sourcemap[tostring(file) .. ".lua"] and _G.__TS__sourcemap[tostring(file) .. ".lua"][line] then
+                    return tostring(file) .. ".ts:" .. tostring(_G.__TS__sourcemap[tostring(file) .. ".lua"][line])
+                end
+                return tostring(file) .. ".lua:" .. tostring(line)
+            end)
+            return result
+        end
+    end
+end
+
+__TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["37"] = 1,["38"] = 2,["40"] = 5,["41"] = 6,["42"] = 7,["43"] = 8,["45"] = 11,["46"] = 12,["48"] = 18,["49"] = 19,["50"] = 20,["51"] = 21,["52"] = 22,["53"] = 23,["54"] = 24,["57"] = 27,["59"] = 29,["61"] = 32,["62"] = 33,["63"] = 34,["64"] = 35,["65"] = 36,["66"] = 37,["67"] = 38,["70"] = 41,["72"] = 43});
 if _G.reloadCache == nil then
     _G.reloadCache = {}
 end
-function reloadable(self, className, constructor)
+function reloadable(self, constructor)
+    local className = constructor.name
     if _G.reloadCache[className] == nil then
         _G.reloadCache[className] = constructor
     end
@@ -20,9 +54,9 @@ function registerModifier(self, name, modifier)
                 instance[key] = prototype[key]
             end
         end
-        prototype = getmetatable(nil, prototype)
+        prototype = getmetatable(prototype)
     end
-    getfenv(nil, 1)[name] = instance
+    getfenv(1)[name] = instance
 end
 function registerAbility(self, name, ability)
     local instance = {}
@@ -33,7 +67,7 @@ function registerAbility(self, name, ability)
                 instance[key] = prototype[key]
             end
         end
-        prototype = getmetatable(nil, prototype)
+        prototype = getmetatable(prototype)
     end
-    getfenv(nil, 1)[name] = instance
+    getfenv(1)[name] = instance
 end

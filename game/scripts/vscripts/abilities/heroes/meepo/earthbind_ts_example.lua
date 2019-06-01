@@ -1,10 +1,30 @@
 --[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
-require("lualib_bundle");
-__TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["4"] = 1,["5"] = 1,["6"] = 1,["7"] = 1,["8"] = 1,["9"] = 1,["10"] = 1,["11"] = 1,["12"] = 1,["13"] = 1,["14"] = 1,["15"] = 1,["16"] = 1,["17"] = 4,["18"] = 4,["19"] = 4,["20"] = 7,["21"] = 4,["22"] = 9,["23"] = 4,["24"] = 4,["25"] = 4,["26"] = 4,["27"] = 1,["28"] = 16,["29"] = 16,["30"] = 16,["31"] = 1,["32"] = 21,["33"] = 21,["34"] = 1,["35"] = 25,["36"] = 25,["37"] = 25,["38"] = 25,["39"] = 25,["40"] = 25,["41"] = 25,["42"] = 25,["43"] = 25,["44"] = 25,["45"] = 25,["46"] = 25,["47"] = 25,["48"] = 25,["49"] = 43,["50"] = 43,["51"] = 43,["52"] = 43,["53"] = 43,["54"] = 43,["55"] = 43,["56"] = 43,["57"] = 43,["58"] = 43,["59"] = 43,["60"] = 43,["61"] = 43,["62"] = 43,["63"] = 43,["64"] = 43,["65"] = 43,["66"] = 43,["67"] = 25,["68"] = 25,["69"] = 1,["70"] = 65,["71"] = 65,["72"] = 65,["73"] = 65,["74"] = 65,["75"] = 65,["76"] = 65,["77"] = 65,["78"] = 65,["79"] = 65,["80"] = 65,["81"] = 65,["82"] = 65,["83"] = 1,["84"] = 1,["85"] = 1});
+-- Lua Library inline imports
+--[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
+function __TS__SourceMapTraceBack(fileName, sourceMap)
+    _G.__TS__sourcemap = _G.__TS__sourcemap or {}
+    _G.__TS__sourcemap[fileName] = sourceMap
+    if _G.__TS__originalTraceback == nil then
+        _G.__TS__originalTraceback = debug.traceback
+        debug.traceback = function(thread, message, level)
+            local trace = _G.__TS__originalTraceback(thread, message, level)
+            local result = string.gsub(trace, "(%S+).lua:(%d+)", function(file, line)
+                if _G.__TS__sourcemap[tostring(file) .. ".lua"] and _G.__TS__sourcemap[tostring(file) .. ".lua"][line] then
+                    return tostring(file) .. ".ts:" .. tostring(_G.__TS__sourcemap[tostring(file) .. ".lua"][line])
+                end
+                return tostring(file) .. ".lua:" .. tostring(line)
+            end)
+            return result
+        end
+    end
+end
+
+__TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["23"] = 1,["24"] = 1,["25"] = 1,["26"] = 1,["27"] = 1,["28"] = 1,["29"] = 1,["37"] = 4,["38"] = 5,["39"] = 6,["40"] = 7,["41"] = 8,["42"] = 9,["43"] = 10,["46"] = 13,["48"] = 16,["49"] = 17,["50"] = 18,["52"] = 20,["54"] = 23,["55"] = 24,["57"] = 27,["58"] = 28,["59"] = 29,["60"] = 30,["61"] = 32,["62"] = 33,["63"] = 34,["64"] = 36,["65"] = 37,["66"] = 43,["67"] = 44,["68"] = 45,["69"] = 47,["70"] = 48,["71"] = 49,["72"] = 51,["73"] = 53,["74"] = 53,["75"] = 53,["76"] = 53,["77"] = 53,["78"] = 53,["79"] = 53,["80"] = 53,["81"] = 53,["82"] = 53,["83"] = 53,["84"] = 53,["85"] = 53,["86"] = 53,["87"] = 53,["88"] = 53,["89"] = 53,["90"] = 53,["91"] = 53,["92"] = 72,["94"] = 75,["95"] = 77,["96"] = 78,["97"] = 79,["98"] = 81,["99"] = 82,["100"] = 84,["101"] = 95,["102"] = 96,["103"] = 97,["105"] = 99,["106"] = 100,["107"] = 101,["110"] = 1});
 registerAbility(nil, "meepo_earthbind_ts_example", (function()
-    ____ = ____ or {}
+    ____ = {}
+    ____.name = "____"
     ____.__index = ____
-    ____.prototype = ____.prototype or {}
+    ____.prototype = {}
     ____.prototype.__index = ____.prototype
     ____.prototype.constructor = ____
     function ____.new(...)
@@ -17,7 +37,7 @@ registerAbility(nil, "meepo_earthbind_ts_example", (function()
     function ____.prototype.GetCooldown(self)
         local caster = self:GetCaster()
         local cooldown = self:GetSpecialValueFor("cooldown")
-        if IsServer(nil) then
+        if IsServer() then
             local talent = self:GetCaster():FindAbilityByName("special_bonus_unique_meepo_3")
             if talent then
                 cooldown = cooldown - talent:GetSpecialValueFor("value")
@@ -26,7 +46,9 @@ registerAbility(nil, "meepo_earthbind_ts_example", (function()
         return cooldown
     end
     function ____.prototype.OnAbilityPhaseStart(self)
-        self:GetCaster():EmitSound("Hero_Meepo.Earthbind.Cast")
+        if IsServer() then
+            self:GetCaster():EmitSound("Hero_Meepo.Earthbind.Cast")
+        end
         return true
     end
     function ____.prototype.OnAbilityPhaseInterrupted(self)
@@ -40,12 +62,14 @@ registerAbility(nil, "meepo_earthbind_ts_example", (function()
         direction.z = 0
         local distance = point - caster:GetAbsOrigin():Length()
         local radius = self:GetSpecialValueFor("radius")
-        self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_meepo/meepo_earthbind_projectile_fx.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+        self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_meepo/meepo_earthbind_projectile_fx.vpcf", PATTACH_CUSTOMORIGIN, caster)
+        print("caster", caster:GetAbsOrigin())
+        print("point", point)
+        print("speed", projectileSpeed)
         ParticleManager:SetParticleControl(self.particle, 0, caster:GetAbsOrigin())
         ParticleManager:SetParticleControl(self.particle, 1, point)
-        ParticleManager:SetParticleControl(self.particle, 2, Vector(nil, projectileSpeed, 0, 0))
-        ParticleManager:SetParticleControl(self.particle, 3, point)
-        caster:EmitSound("Hero_Meepo.Earthbind.Cast")
+        ParticleManager:SetParticleControl(self.particle, 2, Vector(projectileSpeed, 0, 0))
+        print(distance, radius)
         local projectileTable = {
             Ability = self,
             EffectName = "",
@@ -71,10 +95,11 @@ registerAbility(nil, "meepo_earthbind_ts_example", (function()
         local caster = self:GetCaster()
         local duration = self:GetSpecialValueFor("duration")
         local radius = self:GetSpecialValueFor("radius")
-        local units = FindUnitsInRadius(nil, caster:GetTeamNumber(), location, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, 0, false)
-        for ____TS_index = 1, #units do
-            local unit = units[____TS_index]
-            unit:AddNewModifier(caster, self, "modifier_meepo_earthbind_lua", {duration = duration})
+        print("location", location)
+        print("radius", radius)
+        local units = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, bit.bor(DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_HERO), DOTA_UNIT_TARGET_FLAG_NONE, 0, false)
+        for ____, unit in ipairs(units) do
+            unit:AddNewModifier(caster, self, "modifier_meepo_earthbind", {duration = duration})
             unit:EmitSound("Hero_Meepo.Earthbind.Target")
         end
         ParticleManager:DestroyParticle(self.particle, false)

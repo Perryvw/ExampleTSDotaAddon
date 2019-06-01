@@ -14,8 +14,10 @@ registerAbility("meepo_earthbind_ts_example", class extends CDOTA_Ability_Lua {
     }
 
     OnAbilityPhaseStart() {
-        this.GetCaster().EmitSound("Hero_Meepo.Earthbind.Cast")
-        return true
+        if (IsServer()) {
+            this.GetCaster().EmitSound("Hero_Meepo.Earthbind.Cast")
+        }
+        return true;
     }
 
     OnAbilityPhaseInterrupted() {
@@ -23,22 +25,30 @@ registerAbility("meepo_earthbind_ts_example", class extends CDOTA_Ability_Lua {
     }
 
     OnSpellStart() {
-        let caster = this.GetCaster()
-        let point = this.GetCursorPosition()
-        let projectileSpeed = this.GetSpecialValueFor("speed")
+        let caster = this.GetCaster();
+        let point = this.GetCursorPosition();
+        let projectileSpeed = this.GetSpecialValueFor("speed");
 
         const direction = (point - caster.GetAbsOrigin() as Vector).Normalized();
         direction.z = 0;
         const distance = (point - caster.GetAbsOrigin() as Vector).Length();
 
-        let radius = this.GetSpecialValueFor("radius")
-        this.particle = ParticleManager.CreateParticle("particles/units/heroes/hero_meepo/meepo_earthbind_projectile_fx.vpcf", ParticleAttachment_t.PATTACH_ABSORIGIN_FOLLOW, caster)
-        ParticleManager.SetParticleControl(this.particle, 0, caster.GetAbsOrigin())
-        ParticleManager.SetParticleControl(this.particle, 1, point)
-        ParticleManager.SetParticleControl(this.particle, 2, Vector(projectileSpeed, 0, 0))
-        ParticleManager.SetParticleControl(this.particle, 3, point)
+        let radius = this.GetSpecialValueFor("radius");
+        this.particle = ParticleManager.CreateParticle(
+            "particles/units/heroes/hero_meepo/meepo_earthbind_projectile_fx.vpcf",
+            ParticleAttachment_t.PATTACH_CUSTOMORIGIN,
+            caster
+        );
 
-        caster.EmitSound("Hero_Meepo.Earthbind.Cast");
+        print("caster", caster.GetAbsOrigin());
+        print("point", point);
+        print("speed", projectileSpeed);
+
+        ParticleManager.SetParticleControl(this.particle, 0, caster.GetAbsOrigin());
+        ParticleManager.SetParticleControl(this.particle, 1, point);
+        ParticleManager.SetParticleControl(this.particle, 2, Vector(projectileSpeed, 0, 0));
+
+        print(distance, radius);
 
         let projectileTable:LinearProjectileTable = {
             Ability: this,
@@ -62,23 +72,28 @@ registerAbility("meepo_earthbind_ts_example", class extends CDOTA_Ability_Lua {
         ProjectileManager.CreateLinearProjectile(projectileTable)
     }
 
-    OnProjectileHit(target:CDOTA_BaseNPC, location:Vector) {
+    OnProjectileHit(target: CDOTA_BaseNPC, location: Vector) {
+
         let caster = this.GetCaster()
         let duration = this.GetSpecialValueFor("duration")
         let radius = this.GetSpecialValueFor("radius")
+
+        print("location", location);
+        print("radius", radius)
+
         let units = FindUnitsInRadius(
             caster.GetTeamNumber(),
             location,
             null,
             radius,
             DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY,
-            DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_BASIC+DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_HERO,
+            DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_HERO,
             DOTA_UNIT_TARGET_FLAGS.DOTA_UNIT_TARGET_FLAG_NONE,
             0,
             false
         )
         for (let unit of units) {
-            unit.AddNewModifier(caster,this,"modifier_meepo_earthbind_lua",{duration:duration})
+            unit.AddNewModifier(caster,this,"modifier_meepo_earthbind",{duration: duration})
             unit.EmitSound("Hero_Meepo.Earthbind.Target")
         }
         ParticleManager.DestroyParticle(this.particle,false)

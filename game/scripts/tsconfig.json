@@ -1,14 +1,14 @@
 {
     "compilerOptions": {
-        "noImplicitAny" : true,
-        "noImplicitThis" : true,
-        "alwaysStrict" : true,
-        "strictNullChecks" : true,
+        "experimentalDecorators": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "strictNullChecks": true,
         "target": "es6",
     },
     "tstl": {
         "luaTarget": "JIT",
-        "luaLibImport": "require",
         "sourceMapTraceback":  true,
     }
 }

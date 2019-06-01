@@ -2,7 +2,14 @@ LinkLuaModifier("modifier_panic", "modifiers/modifier_panic.lua", LuaModifierTyp
 
 const HeroSelectionTime = 10;
 
+@reloadable
 class GameMode {
+    public static Precache(this: void, context: CScriptPrecacheContext) {
+        PrecacheResource("particle", "particles/units/heroes/hero_meepo/meepo_earthbind_projectile_fx.vpcf", context)
+
+        PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_meepo.vsndevts", context)
+    }
+
     constructor() {
         GameRules.SetCustomGameTeamMaxPlayers(DOTATeam_t.DOTA_TEAM_GOODGUYS, 3);
         GameRules.SetCustomGameTeamMaxPlayers(DOTATeam_t.DOTA_TEAM_BADGUYS, 3);
@@ -52,8 +59,10 @@ class GameMode {
                 unit.AddNewModifier(undefined, undefined, "modifier_panic", { duration: 8 });
             });
 
-            // Add lua ability to the unit
-            unit.AddAbility("meepo_earthbind_ts_example");
+            if (!unit.HasAbility("meepo_earthbind_ts_example")) {
+                // Add lua ability to the unit
+                unit.AddAbility("meepo_earthbind_ts_example");
+            }
         }
     }
 }

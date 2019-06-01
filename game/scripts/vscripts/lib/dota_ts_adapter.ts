@@ -1,11 +1,9 @@
-declare const _G: any;
-
 if (_G.reloadCache === undefined) {
     _G.reloadCache = {}
 }
 
-function reloadable<T extends {new(...args: any[]): {}}>(className: string, constructor: T): T {
-
+function reloadable<T extends {new(...args: any[]): {}}>(constructor: T): T {
+    const className = constructor.name;
     if (_G.reloadCache[className] === undefined) {
         _G.reloadCache[className] = constructor;
     }
@@ -14,8 +12,8 @@ function reloadable<T extends {new(...args: any[]): {}}>(className: string, cons
     return _G.reloadCache[className];
 }
 
-declare function getfenv(obj: any): {[key: string]: any};
-declare function getmetatable(obj: object): object;
+declare function getfenv(this: void, obj: any): {[key: string]: any};
+declare function getmetatable(this: void, obj: object): object;
 
 function registerModifier(name: string, modifier: new () => CDOTA_Modifier_Lua) {
     const instance: any = {};

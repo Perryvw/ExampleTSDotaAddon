@@ -1,9 +1,29 @@
 --[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
-require("lualib_bundle");
-__TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["4"] = 2,["5"] = 2,["6"] = 2,["7"] = 2,["8"] = 2,["9"] = 2,["10"] = 2,["11"] = 2,["12"] = 2,["13"] = 2,["14"] = 2,["15"] = 2,["16"] = 4,["17"] = 4,["18"] = 2,["19"] = 8,["20"] = 8,["21"] = 2,["22"] = 12,["23"] = 12,["24"] = 12,["25"] = 12,["26"] = 12,["27"] = 12,["28"] = 12,["29"] = 12,["30"] = 12,["31"] = 12,["32"] = 12,["33"] = 12,["34"] = 12,["35"] = 12,["36"] = 14,["37"] = 14,["38"] = 12,["39"] = 21,["40"] = 21,["41"] = 12,["42"] = 24,["43"] = 24,["44"] = 12,["45"] = 30,["46"] = 30,["47"] = 34,["48"] = 30,["50"] = 38,["51"] = 30,["52"] = 12,["53"] = 12,["54"] = 2});
-Modifier_Speed = Modifier_Speed or {}
+-- Lua Library inline imports
+--[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
+function __TS__SourceMapTraceBack(fileName, sourceMap)
+    _G.__TS__sourcemap = _G.__TS__sourcemap or {}
+    _G.__TS__sourcemap[fileName] = sourceMap
+    if _G.__TS__originalTraceback == nil then
+        _G.__TS__originalTraceback = debug.traceback
+        debug.traceback = function(thread, message, level)
+            local trace = _G.__TS__originalTraceback(thread, message, level)
+            local result = string.gsub(trace, "(%S+).lua:(%d+)", function(file, line)
+                if _G.__TS__sourcemap[tostring(file) .. ".lua"] and _G.__TS__sourcemap[tostring(file) .. ".lua"][line] then
+                    return tostring(file) .. ".ts:" .. tostring(_G.__TS__sourcemap[tostring(file) .. ".lua"][line])
+                end
+                return tostring(file) .. ".lua:" .. tostring(line)
+            end)
+            return result
+        end
+    end
+end
+
+__TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["23"] = 2,["24"] = 2,["25"] = 2,["26"] = 2,["27"] = 2,["28"] = 2,["36"] = 4,["37"] = 5,["39"] = 8,["40"] = 8,["42"] = 12,["43"] = 12,["44"] = 12,["45"] = 12,["46"] = 12,["47"] = 12,["48"] = 12,["49"] = 12,["50"] = 12,["57"] = 14,["58"] = 15,["60"] = 21,["61"] = 21,["63"] = 24,["64"] = 26,["66"] = 30,["67"] = 31,["68"] = 33,["71"] = 12});
+Modifier_Speed = {}
+Modifier_Speed.name = "Modifier_Speed"
 Modifier_Speed.__index = Modifier_Speed
-Modifier_Speed.prototype = Modifier_Speed.prototype or {}
+Modifier_Speed.prototype = {}
 Modifier_Speed.prototype.__index = Modifier_Speed.prototype
 Modifier_Speed.prototype.constructor = Modifier_Speed
 function Modifier_Speed.new(...)
@@ -20,9 +40,10 @@ function Modifier_Speed.prototype.GetModifierMoveSpeed_Absolute(self)
     return 300
 end
 registerModifier(nil, "modifier_panic", (function()
-    ____ = ____ or {}
+    ____ = {}
+    ____.name = "____"
     ____.__index = ____
-    ____.prototype = ____.prototype or {}
+    ____.prototype = {}
     ____.prototype.__index = ____.prototype
     ____.prototype.constructor = ____
     ____.____super = Modifier_Speed
@@ -44,11 +65,7 @@ registerModifier(nil, "modifier_panic", (function()
     end
     function ____.prototype.OnIntervalThink(self)
         local parent = self:GetParent()
-        if parent:GetAbsOrigin():Length2D() < 500 then
-            parent:MoveToPosition(parent:GetAbsOrigin() + RandomVector(nil, 400))
-        else
-            parent:MoveToPosition(RandomVector(nil, 300))
-        end
+        parent:MoveToPosition(parent:GetAbsOrigin() + RandomVector(400))
     end
     return ____
 end)())
