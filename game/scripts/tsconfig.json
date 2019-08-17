@@ -11,5 +11,6 @@
     "tstl": {
         "luaTarget": "JIT",
         "sourceMapTraceback":  true,
+        "luaLibImport": "require",
     }
 }

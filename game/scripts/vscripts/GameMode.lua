@@ -1,52 +1,6 @@
 --[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
--- Lua Library inline imports
-function __TS__Decorate(decorators, target, key, desc)
-    local result = target
-    do
-        local i = #decorators
-        while i >= 0 do
-            local decorator = decorators[i + 1]
-            if decorator then
-                local oldResult = result
-                if key == nil then
-                    result = decorator(_G, result)
-                elseif desc ~= nil then
-                    result = decorator(_G, target, key, result)
-                else
-                    result = decorator(_G, target, key)
-                end
-                result = result or oldResult
-            end
-            i = i - 1
-        end
-    end
-    return result
-end
-
-function __TS__SourceMapTraceBack(fileName, sourceMap)
-    _G.__TS__sourcemap = _G.__TS__sourcemap or {}
-    _G.__TS__sourcemap[fileName] = sourceMap
-    if _G.__TS__originalTraceback == nil then
-        _G.__TS__originalTraceback = debug.traceback
-        debug.traceback = function(thread, message, level)
-            local trace = _G.__TS__originalTraceback(thread, message, level)
-            local result = string.gsub(
-                trace,
-                "(%S+).lua:(%d+)",
-                function(file, line)
-                    local fileSourceMap = _G.__TS__sourcemap[tostring(file) .. ".lua"]
-                    if fileSourceMap and fileSourceMap[line] then
-                        return tostring(file) .. ".ts:" .. tostring(fileSourceMap[line])
-                    end
-                    return tostring(file) .. ".lua:" .. tostring(line)
-                end
-            )
-            return result
-        end
-    end
-end
-
-__TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["50"] = 1,["51"] = 1,["52"] = 3,["53"] = 5,["54"] = 7,["55"] = 7,["56"] = 7,["57"] = 7,["58"] = 7,["59"] = 7,["61"] = 7,["63"] = 7,["64"] = 7,["66"] = 16,["67"] = 17,["68"] = 19,["69"] = 20,["70"] = 22,["71"] = 22,["72"] = 22,["73"] = 22,["74"] = 22,["75"] = 24,["76"] = 24,["77"] = 24,["78"] = 24,["79"] = 24,["80"] = 15,["81"] = 9,["82"] = 10,["83"] = 12,["84"] = 9,["85"] = 27,["86"] = 28,["87"] = 31,["89"] = 32,["90"] = 32,["91"] = 33,["92"] = 32,["96"] = 38,["97"] = 39,["98"] = 39,["99"] = 39,["100"] = 39,["102"] = 27,["103"] = 43,["104"] = 44,["105"] = 43,["106"] = 50,["107"] = 51,["108"] = 50,["109"] = 56,["110"] = 58,["111"] = 59,["112"] = 60,["113"] = 60,["114"] = 60,["115"] = 61,["116"] = 60,["117"] = 60,["118"] = 64,["119"] = 66,["122"] = 56,["123"] = 7});
+require("lualib_bundle");
+__TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["4"] = 1,["5"] = 1,["6"] = 3,["7"] = 5,["8"] = 7,["9"] = 7,["10"] = 7,["11"] = 7,["12"] = 7,["13"] = 7,["15"] = 7,["17"] = 7,["18"] = 7,["20"] = 16,["21"] = 17,["22"] = 19,["23"] = 20,["24"] = 22,["25"] = 22,["26"] = 22,["27"] = 22,["28"] = 22,["29"] = 24,["30"] = 24,["31"] = 24,["32"] = 24,["33"] = 24,["34"] = 15,["35"] = 9,["36"] = 10,["37"] = 12,["38"] = 9,["39"] = 27,["40"] = 28,["41"] = 31,["43"] = 32,["44"] = 32,["45"] = 33,["46"] = 32,["50"] = 38,["51"] = 39,["52"] = 39,["53"] = 39,["54"] = 39,["56"] = 27,["57"] = 43,["58"] = 44,["59"] = 43,["60"] = 50,["61"] = 51,["62"] = 50,["63"] = 56,["64"] = 58,["65"] = 59,["66"] = 60,["67"] = 60,["68"] = 60,["69"] = 61,["70"] = 60,["71"] = 60,["72"] = 64,["73"] = 66,["76"] = 56,["77"] = 7});
 local ____dota_ts_adapter = require("lib.dota_ts_adapter")
 local reloadable = ____dota_ts_adapter.reloadable
 LinkLuaModifier("modifier_panic", "modifiers/modifier_panic.lua", LUA_MODIFIER_MOTION_NONE)

@@ -1,52 +1,6 @@
 --[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
--- Lua Library inline imports
-function __TS__Decorate(decorators, target, key, desc)
-    local result = target
-    do
-        local i = #decorators
-        while i >= 0 do
-            local decorator = decorators[i + 1]
-            if decorator then
-                local oldResult = result
-                if key == nil then
-                    result = decorator(_G, result)
-                elseif desc ~= nil then
-                    result = decorator(_G, target, key, result)
-                else
-                    result = decorator(_G, target, key)
-                end
-                result = result or oldResult
-            end
-            i = i - 1
-        end
-    end
-    return result
-end
-
-function __TS__SourceMapTraceBack(fileName, sourceMap)
-    _G.__TS__sourcemap = _G.__TS__sourcemap or {}
-    _G.__TS__sourcemap[fileName] = sourceMap
-    if _G.__TS__originalTraceback == nil then
-        _G.__TS__originalTraceback = debug.traceback
-        debug.traceback = function(thread, message, level)
-            local trace = _G.__TS__originalTraceback(thread, message, level)
-            local result = string.gsub(
-                trace,
-                "(%S+).lua:(%d+)",
-                function(file, line)
-                    local fileSourceMap = _G.__TS__sourcemap[tostring(file) .. ".lua"]
-                    if fileSourceMap and fileSourceMap[line] then
-                        return tostring(file) .. ".ts:" .. tostring(fileSourceMap[line])
-                    end
-                    return tostring(file) .. ".lua:" .. tostring(line)
-                end
-            )
-            return result
-        end
-    end
-end
-
-__TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["50"] = 1,["51"] = 1,["52"] = 3,["53"] = 3,["54"] = 3,["55"] = 3,["56"] = 3,["57"] = 3,["59"] = 3,["61"] = 3,["62"] = 3,["64"] = 3,["65"] = 7,["66"] = 8,["67"] = 9,["68"] = 10,["69"] = 11,["70"] = 12,["71"] = 13,["74"] = 16,["75"] = 7,["76"] = 19,["77"] = 20,["78"] = 21,["80"] = 23,["81"] = 19,["82"] = 26,["83"] = 27,["84"] = 26,["85"] = 30,["86"] = 31,["87"] = 32,["88"] = 33,["89"] = 35,["90"] = 36,["91"] = 37,["92"] = 39,["93"] = 40,["94"] = 46,["95"] = 46,["96"] = 46,["97"] = 46,["98"] = 46,["99"] = 47,["100"] = 48,["101"] = 48,["102"] = 48,["103"] = 48,["104"] = 48,["105"] = 50,["106"] = 50,["107"] = 50,["108"] = 50,["109"] = 50,["110"] = 50,["111"] = 50,["112"] = 50,["113"] = 50,["114"] = 50,["115"] = 50,["116"] = 50,["117"] = 50,["118"] = 50,["119"] = 50,["120"] = 50,["121"] = 50,["122"] = 50,["123"] = 50,["124"] = 69,["125"] = 30,["126"] = 72,["127"] = 74,["128"] = 75,["129"] = 76,["130"] = 78,["131"] = 78,["132"] = 78,["133"] = 78,["134"] = 78,["135"] = 78,["136"] = 78,["137"] = 78,["138"] = 78,["139"] = 78,["140"] = 78,["141"] = 89,["142"] = 90,["143"] = 91,["145"] = 93,["146"] = 94,["147"] = 95,["148"] = 72,["149"] = 3});
+require("lualib_bundle");
+__TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["4"] = 1,["5"] = 1,["6"] = 3,["7"] = 3,["8"] = 3,["9"] = 3,["10"] = 3,["11"] = 3,["13"] = 3,["15"] = 3,["16"] = 3,["18"] = 3,["19"] = 7,["20"] = 8,["21"] = 9,["22"] = 10,["23"] = 11,["24"] = 12,["25"] = 13,["28"] = 16,["29"] = 7,["30"] = 19,["31"] = 20,["32"] = 21,["34"] = 23,["35"] = 19,["36"] = 26,["37"] = 27,["38"] = 26,["39"] = 30,["40"] = 31,["41"] = 32,["42"] = 33,["43"] = 35,["44"] = 36,["45"] = 37,["46"] = 39,["47"] = 40,["48"] = 46,["49"] = 46,["50"] = 46,["51"] = 46,["52"] = 46,["53"] = 47,["54"] = 48,["55"] = 48,["56"] = 48,["57"] = 48,["58"] = 48,["59"] = 50,["60"] = 50,["61"] = 50,["62"] = 50,["63"] = 50,["64"] = 50,["65"] = 50,["66"] = 50,["67"] = 50,["68"] = 50,["69"] = 50,["70"] = 50,["71"] = 50,["72"] = 50,["73"] = 50,["74"] = 50,["75"] = 50,["76"] = 50,["77"] = 50,["78"] = 69,["79"] = 30,["80"] = 72,["81"] = 74,["82"] = 75,["83"] = 76,["84"] = 78,["85"] = 78,["86"] = 78,["87"] = 78,["88"] = 78,["89"] = 78,["90"] = 78,["91"] = 78,["92"] = 78,["93"] = 78,["94"] = 78,["95"] = 89,["96"] = 90,["97"] = 91,["99"] = 93,["100"] = 94,["101"] = 95,["102"] = 72,["103"] = 3});
 local ____dota_ts_adapter = require("lib.dota_ts_adapter")
 local luaAbility = ____dota_ts_adapter.luaAbility
 meepo_earthbind_ts_example = {}

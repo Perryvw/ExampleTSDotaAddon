@@ -1,42 +1,6 @@
 --[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
--- Lua Library inline imports
-function __TS__ObjectAssign(to, ...)
-    local sources = ({...})
-    if to == nil then
-        return to
-    end
-    for ____, source in ipairs(sources) do
-        for key in pairs(source) do
-            to[key] = source[key]
-        end
-    end
-    return to
-end
-
-function __TS__SourceMapTraceBack(fileName, sourceMap)
-    _G.__TS__sourcemap = _G.__TS__sourcemap or {}
-    _G.__TS__sourcemap[fileName] = sourceMap
-    if _G.__TS__originalTraceback == nil then
-        _G.__TS__originalTraceback = debug.traceback
-        debug.traceback = function(thread, message, level)
-            local trace = _G.__TS__originalTraceback(thread, message, level)
-            local result = string.gsub(
-                trace,
-                "(%S+).lua:(%d+)",
-                function(file, line)
-                    local fileSourceMap = _G.__TS__sourcemap[tostring(file) .. ".lua"]
-                    if fileSourceMap and fileSourceMap[line] then
-                        return tostring(file) .. ".ts:" .. tostring(fileSourceMap[line])
-                    end
-                    return tostring(file) .. ".lua:" .. tostring(line)
-                end
-            )
-            return result
-        end
-    end
-end
-
-__TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["41"] = 1,["42"] = 2,["44"] = 5,["45"] = 6,["46"] = 7,["47"] = 8,["49"] = 11,["50"] = 12,["51"] = 5,["52"] = 18,["53"] = 19,["54"] = 20,["55"] = 21,["56"] = 22,["57"] = 23,["58"] = 24,["61"] = 27,["63"] = 29,["64"] = 30,["65"] = 18,["66"] = 33,["67"] = 34,["68"] = 35,["69"] = 36,["70"] = 37,["71"] = 38,["72"] = 39,["75"] = 42,["77"] = 44,["78"] = 45,["79"] = 33});
+require("lualib_bundle");
+__TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["5"] = 1,["6"] = 2,["8"] = 5,["9"] = 6,["10"] = 7,["11"] = 8,["13"] = 11,["14"] = 12,["15"] = 5,["16"] = 18,["17"] = 19,["18"] = 20,["19"] = 21,["20"] = 22,["21"] = 23,["22"] = 24,["25"] = 27,["27"] = 29,["28"] = 30,["29"] = 18,["30"] = 33,["31"] = 34,["32"] = 35,["33"] = 36,["34"] = 37,["35"] = 38,["36"] = 39,["39"] = 42,["41"] = 44,["42"] = 45,["43"] = 33});
 local ____exports = {}
 if _G.reloadCache == nil then
     _G.reloadCache = {}
