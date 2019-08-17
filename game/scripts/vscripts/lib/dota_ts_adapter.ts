@@ -2,7 +2,7 @@ if (_G.reloadCache === undefined) {
     _G.reloadCache = {}
 }
 
-function reloadable<T extends {new(...args: any[]): {}}>(constructor: T): T {
+export function reloadable<T extends {new(...args: any[]): {}}>(constructor: T): T {
     const className = constructor.name;
     if (_G.reloadCache[className] === undefined) {
         _G.reloadCache[className] = constructor;
@@ -15,9 +15,9 @@ function reloadable<T extends {new(...args: any[]): {}}>(constructor: T): T {
 declare function getfenv(this: void, obj: any): {[key: string]: any};
 declare function getmetatable(this: void, obj: object): object;
 
-function registerModifier(name: string, modifier: new () => CDOTA_Modifier_Lua) {
+export function luaModifier<T extends typeof CDOTA_Modifier_Lua>(modifier: T): T {
     const instance: any = {};
-    let prototype = modifier.prototype;
+    let prototype = modifier.prototype as any;
     while (prototype) {
         for (const key in prototype) {
             if (instance[key] === undefined) {
@@ -26,12 +26,13 @@ function registerModifier(name: string, modifier: new () => CDOTA_Modifier_Lua) 
         }
         prototype = getmetatable(prototype);
     }
-    getfenv(1)[name] = instance;
+    getfenv(1)[modifier.name] = instance;
+    return instance;
 }
 
-function registerAbility(name: string, ability: new () => CDOTA_Ability_Lua) {
+export function luaAbility<T extends typeof CDOTA_Ability_Lua>(ability: T): T {
     const instance: any = {};
-    let prototype = ability.prototype;
+    let prototype = ability.prototype as any;
     while (prototype) {
         for (const key in prototype) {
             if (instance[key] === undefined) {
@@ -40,5 +41,6 @@ function registerAbility(name: string, ability: new () => CDOTA_Ability_Lua) {
         }
         prototype = getmetatable(prototype);
     }
-    getfenv(1)[name] = instance;
+    getfenv(1)[ability.name] = instance;
+    return instance;
 }

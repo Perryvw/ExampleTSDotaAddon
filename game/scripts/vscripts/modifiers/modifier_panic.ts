@@ -1,3 +1,5 @@
+import { luaModifier } from "../lib/dota_ts_adapter";
+
 // Base speed modifier -- Could be moved to a separate file
 class Modifier_Speed extends CDOTA_Modifier_Lua {
     // Declare functions
@@ -8,8 +10,8 @@ class Modifier_Speed extends CDOTA_Modifier_Lua {
     GetModifierMoveSpeed_Absolute(): number { return 300; }
 }
 
-// Register modifier_panic with dota, it extends the base speed modifier
-registerModifier("modifier_panic", class extends Modifier_Speed {
+@luaModifier
+class modifier_panic extends Modifier_Speed {
     // Set state
     CheckState(): {[state: number]: boolean} {
         return {
@@ -32,4 +34,4 @@ registerModifier("modifier_panic", class extends Modifier_Speed {
 
         parent.MoveToPosition(parent.GetAbsOrigin() + RandomVector(400) as Vector);
     }
-});
+}

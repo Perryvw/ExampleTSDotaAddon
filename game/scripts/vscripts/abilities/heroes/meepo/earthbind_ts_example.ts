@@ -1,4 +1,7 @@
-registerAbility("meepo_earthbind_ts_example", class extends CDOTA_Ability_Lua {
+import { luaAbility } from "../../../lib/dota_ts_adapter";
+
+@luaAbility
+class meepo_earthbind_ts_example extends CDOTA_Ability_Lua {
     particle:ParticleID
 
     GetCooldown() {
@@ -40,15 +43,9 @@ registerAbility("meepo_earthbind_ts_example", class extends CDOTA_Ability_Lua {
             caster
         );
 
-        print("caster", caster.GetAbsOrigin());
-        print("point", point);
-        print("speed", projectileSpeed);
-
         ParticleManager.SetParticleControl(this.particle, 0, caster.GetAbsOrigin());
         ParticleManager.SetParticleControl(this.particle, 1, point);
         ParticleManager.SetParticleControl(this.particle, 2, Vector(projectileSpeed, 0, 0));
-
-        print(distance, radius);
 
         let projectileTable:LinearProjectileTable = {
             Ability: this,
@@ -78,9 +75,6 @@ registerAbility("meepo_earthbind_ts_example", class extends CDOTA_Ability_Lua {
         let duration = this.GetSpecialValueFor("duration")
         let radius = this.GetSpecialValueFor("radius")
 
-        print("location", location);
-        print("radius", radius)
-
         let units = FindUnitsInRadius(
             caster.GetTeamNumber(),
             location,
@@ -100,4 +94,4 @@ registerAbility("meepo_earthbind_ts_example", class extends CDOTA_Ability_Lua {
         ParticleManager.ReleaseParticleIndex(this.particle)
         return true
     }
-});
+}

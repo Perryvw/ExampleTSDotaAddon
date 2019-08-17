@@ -6,6 +6,7 @@
         "alwaysStrict": true,
         "strictNullChecks": true,
         "target": "es6",
+        "rootDir": "./vscripts"
     },
     "tstl": {
         "luaTarget": "JIT",

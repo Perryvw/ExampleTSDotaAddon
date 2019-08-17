@@ -1,6 +1,5 @@
 --[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
 -- Lua Library inline imports
---[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
 function __TS__Decorate(decorators, target, key, desc)
     local result = target
     do
@@ -24,7 +23,6 @@ function __TS__Decorate(decorators, target, key, desc)
     return result
 end
 
---[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
 function __TS__SourceMapTraceBack(fileName, sourceMap)
     _G.__TS__sourcemap = _G.__TS__sourcemap or {}
     _G.__TS__sourcemap[fileName] = sourceMap
@@ -32,18 +30,25 @@ function __TS__SourceMapTraceBack(fileName, sourceMap)
         _G.__TS__originalTraceback = debug.traceback
         debug.traceback = function(thread, message, level)
             local trace = _G.__TS__originalTraceback(thread, message, level)
-            local result = string.gsub(trace, "(%S+).lua:(%d+)", function(file, line)
-                if _G.__TS__sourcemap[tostring(file) .. ".lua"] and _G.__TS__sourcemap[tostring(file) .. ".lua"][line] then
-                    return tostring(file) .. ".ts:" .. tostring(_G.__TS__sourcemap[tostring(file) .. ".lua"][line])
+            local result = string.gsub(
+                trace,
+                "(%S+).lua:(%d+)",
+                function(file, line)
+                    local fileSourceMap = _G.__TS__sourcemap[tostring(file) .. ".lua"]
+                    if fileSourceMap and fileSourceMap[line] then
+                        return tostring(file) .. ".ts:" .. tostring(fileSourceMap[line])
+                    end
+                    return tostring(file) .. ".lua:" .. tostring(line)
                 end
-                return tostring(file) .. ".lua:" .. tostring(line)
-            end)
+            )
             return result
         end
     end
 end
 
-__TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["47"] = 1,["48"] = 3,["49"] = 5,["50"] = 5,["51"] = 5,["52"] = 5,["53"] = 5,["54"] = 5,["61"] = 14,["62"] = 15,["63"] = 17,["64"] = 18,["65"] = 20,["66"] = 22,["68"] = 7,["69"] = 8,["70"] = 10,["72"] = 25,["73"] = 26,["74"] = 29,["76"] = 30,["77"] = 30,["78"] = 31,["79"] = 30,["83"] = 36,["84"] = 37,["87"] = 41,["88"] = 42,["90"] = 48,["91"] = 49,["93"] = 54,["94"] = 56,["95"] = 57,["96"] = 58,["97"] = 59,["98"] = 58,["99"] = 62,["100"] = 64,["104"] = 5});
+__TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["50"] = 1,["51"] = 1,["52"] = 3,["53"] = 5,["54"] = 7,["55"] = 7,["56"] = 7,["57"] = 7,["58"] = 7,["59"] = 7,["61"] = 7,["63"] = 7,["64"] = 7,["66"] = 16,["67"] = 17,["68"] = 19,["69"] = 20,["70"] = 22,["71"] = 22,["72"] = 22,["73"] = 22,["74"] = 22,["75"] = 24,["76"] = 24,["77"] = 24,["78"] = 24,["79"] = 24,["80"] = 15,["81"] = 9,["82"] = 10,["83"] = 12,["84"] = 9,["85"] = 27,["86"] = 28,["87"] = 31,["89"] = 32,["90"] = 32,["91"] = 33,["92"] = 32,["96"] = 38,["97"] = 39,["98"] = 39,["99"] = 39,["100"] = 39,["102"] = 27,["103"] = 43,["104"] = 44,["105"] = 43,["106"] = 50,["107"] = 51,["108"] = 50,["109"] = 56,["110"] = 58,["111"] = 59,["112"] = 60,["113"] = 60,["114"] = 60,["115"] = 61,["116"] = 60,["117"] = 60,["118"] = 64,["119"] = 66,["122"] = 56,["123"] = 7});
+local ____dota_ts_adapter = require("lib.dota_ts_adapter")
+local reloadable = ____dota_ts_adapter.reloadable
 LinkLuaModifier("modifier_panic", "modifiers/modifier_panic.lua", LUA_MODIFIER_MOTION_NONE)
 local HeroSelectionTime = 10
 GameMode = {}
@@ -62,8 +67,16 @@ function GameMode.prototype.____constructor(self)
     GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_BADGUYS, 3)
     GameRules:SetShowcaseTime(0)
     GameRules:SetHeroSelectionTime(HeroSelectionTime)
-    ListenToGameEvent("game_rules_state_change", function() return self:OnStateChange() end, nil)
-    ListenToGameEvent("npc_spawned", function(event) return self:OnNpcSpawned(event) end, nil)
+    ListenToGameEvent(
+        "game_rules_state_change",
+        function() return self:OnStateChange() end,
+        nil
+    )
+    ListenToGameEvent(
+        "npc_spawned",
+        function(event) return self:OnNpcSpawned(event) end,
+        nil
+    )
 end
 function GameMode.Precache(context)
     PrecacheResource("particle", "particles/units/heroes/hero_meepo/meepo_earthbind_projectile_fx.vpcf", context)
@@ -81,7 +94,10 @@ function GameMode.prototype.OnStateChange(self)
         end
     end
     if state == DOTA_GAMERULES_STATE_PRE_GAME then
-        Timers:CreateTimer(0.2, function() return self:StartGame() end)
+        Timers:CreateTimer(
+            0.2,
+            function() return self:StartGame() end
+        )
     end
 end
 function GameMode.prototype.StartGame(self)
@@ -93,9 +109,12 @@ end
 function GameMode.prototype.OnNpcSpawned(self, event)
     local unit = EntIndexToHScript(event.entindex)
     if unit:IsRealHero() then
-        Timers:CreateTimer(1, function()
-            unit:AddNewModifier(nil, nil, "modifier_panic", {duration = 8})
-        end)
+        Timers:CreateTimer(
+            1,
+            function()
+                unit:AddNewModifier(nil, nil, "modifier_panic", {duration = 8})
+            end
+        )
         if not unit:HasAbility("meepo_earthbind_ts_example") then
             unit:AddAbility("meepo_earthbind_ts_example")
         end

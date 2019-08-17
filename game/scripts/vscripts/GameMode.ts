@@ -1,3 +1,5 @@
+import { reloadable } from "./lib/dota_ts_adapter";
+
 LinkLuaModifier("modifier_panic", "modifiers/modifier_panic.lua", LuaModifierType.LUA_MODIFIER_MOTION_NONE);
 
 const HeroSelectionTime = 10;
