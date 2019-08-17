@@ -1,3 +1,6 @@
 [submodule "game/scripts/declarations"]
 	path = game/scripts/declarations
 	url = https://github.com/TypeScriptToLua/Dota2Declarations
+[submodule "content/panorama/scripts/custom_game/TypescriptPanoramaDeclarations"]
+	path = content/panorama/scripts/custom_game/TypescriptPanoramaDeclarations
+	url = https://github.com/ModDota/TypescriptPanoramaDeclarations.git
