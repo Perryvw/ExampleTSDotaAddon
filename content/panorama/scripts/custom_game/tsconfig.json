@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "strict": true,
-        "lib": ["es2016"]
+        "lib": ["es2016", "es5"],
+        "target": "es5"
     }
 }
