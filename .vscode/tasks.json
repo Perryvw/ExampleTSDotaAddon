@@ -1,0 +1,43 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile TypeScript to Lua",
+            "type": "shell",
+            "command": "tstl -p game/scripts/tsconfig.json",
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Compile TypeScript to Lua - Watch",
+            "type": "shell",
+            "command": "tstl -p game/scripts/tsconfig.json --watch",
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Compile Panorama",
+            "type": "shell",
+            "command": "tsc -p content/panorama/scripts/custom_game/tsconfig.json",
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Compile Panorama - Watch",
+            "type": "shell",
+            "command": "tsc -p content/panorama/scripts/custom_game/tsconfig.json --watch",
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
